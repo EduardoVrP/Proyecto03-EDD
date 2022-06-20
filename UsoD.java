@@ -69,5 +69,17 @@ public class UsoD{
 	Djikstra dj = new Djikstra(vertices, aristas);
 	Lista<Vertice> resultado = dj.aplica();
 	System.out.println(resultado);
+
+	System.out.println("**************************BFS**********************************");
+	File doc = new File("BFS.txt");
+	Bfs recorridoBFS = new Bfs(doc);
+	Lista<Character> bfs = recorridoBFS.aplicaBFS();
+	System.out.println(bfs);
+
+	System.out.println("**************************DFS**********************************");
+	File doc2 = new File("DFS.txt");
+	Dfs recorridoDFS = new Dfs(doc2);
+	Lista<Character> dfs = recorridoDFS.aplicaDFS();
+	System.out.println(dfs);
     }
 }

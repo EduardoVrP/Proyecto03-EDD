@@ -7,9 +7,9 @@ import java.util.Comparator;
 public class Lista<T> {
     
    
-    private Nodo<T> cabeza;
+    public Nodo<T> cabeza;
    
-    private Nodo<T> rabo;
+    public Nodo<T> rabo;
     
     private int longitud;
 

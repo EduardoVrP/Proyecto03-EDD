@@ -54,11 +54,11 @@ public class Menu{
                     //Hacemos Djisktra
                     case 1:
 
-			/**** LEEMOS ***/
-			//Aqui el cliente lee en su terminal la lista de vertices
-			DataInputStream entradaPDS = new DataInputStream(cliente.getInputStream());
-			String mensajeDeSolicitarPDS = (String)entradaPDS.readUTF();
-			System.out.println(mensajeDeSolicitarPDS);
+                        /**** LEEMOS ***/
+                        //Aqui el cliente lee en su terminal la lista de vertices
+                        DataInputStream entradaPDS = new DataInputStream(cliente.getInputStream());
+                        String mensajeDeSolicitarPDS = (String)entradaPDS.readUTF();
+                        System.out.println(mensajeDeSolicitarPDS);
 			
                         //VOLVEMOS A CARGAR DATOS	
                         /***** ESCRIBIMOS ****/
@@ -81,6 +81,11 @@ public class Menu{
                     break;
                     //Hacemos BFS
                     case 2:
+                        /*** LEEMOS ***/
+                        //Aqui el cliente lee en su terminal la lista de vertices
+                        DataInputStream entradaBFS = new DataInputStream(cliente.getInputStream());
+                        String mensajeDeSolicitarBFS = (String)entradaBFS.readUTF();
+                        System.out.println(mensajeDeSolicitarBFS);
 
                         //VOLVEMOS A CARGAR DATOS	
                         /***** ESCRIBIMOS ****/
@@ -102,7 +107,12 @@ public class Menu{
                         break;
                     //Hacemos DFS
                     case 3:
-                        
+                        /*** LEEMOS ***/
+                        //Aqui el cliente lee en su terminal la lista de vertices
+                        DataInputStream entradaDFS = new DataInputStream(cliente.getInputStream());
+                        String mensajeDeSolicitarDFS = (String)entradaDFS.readUTF();
+                        System.out.println(mensajeDeSolicitarDFS);
+
                         //VOLVEMOS A CARGAR DATOS	
                         /***** ESCRIBIMOS ****/
                         //Mandamos saludo al servidor
