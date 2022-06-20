@@ -53,7 +53,13 @@ public class Menu{
                 switch(opcion){
                     //Hacemos Djisktra
                     case 1:
-                        
+
+			/**** LEEMOS ***/
+			//Aqui el cliente lee en su terminal la lista de vertices
+			DataInputStream entradaPDS = new DataInputStream(cliente.getInputStream());
+			String mensajeDeSolicitarPDS = (String)entradaPDS.readUTF();
+			System.out.println(mensajeDeSolicitarPDS);
+			
                         //VOLVEMOS A CARGAR DATOS	
                         /***** ESCRIBIMOS ****/
                         //Mandamos saludo al servidor

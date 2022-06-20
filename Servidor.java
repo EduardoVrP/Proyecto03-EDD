@@ -5,6 +5,13 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.net.Socket;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.InputStreamReader;
+import java.io.BufferedWriter;
+import java.io.BufferedReader;
 
 public class Servidor {
 
@@ -51,8 +58,19 @@ public class Servidor {
 			if(op==4) {	
 				serv.close();	
 			} else {
-				//Hacemos una suma
-				if(op==1) {		
+				//Hacemos Djikstra
+				if(op==1) {
+				    Lista<Vertice> vertices = leeDjikstraV("Djikstra.txt");
+				    Lista<Aristas> aristas = leeDjikstraA("Djikstra.txt");
+				    Djikstra dj = new Djikstra(vertices, aristas);
+
+				    Lista<Vertice> resultado = dj.aplica();
+
+				    /**** ESCRIBIMOS *****/
+					//Le damos al cliente la lista de vertices 
+					DataOutputStream pdSuma = new DataOutputStream(cn.getOutputStream());
+					pdSuma.writeUTF(resultado.toString());
+				    
 
 					//VOLVEMOS A CARGAR DATOS
 					/***** LEEMOS ***/
@@ -133,4 +151,111 @@ public class Servidor {
 			Logger.getLogger(Servidor.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}//termina solicitaOp
+
+    public static Lista<Vertice> leeDjikstraV(String nombreArchivo){
+	Lista<Vertice> vertices = new Lista<>();
+	try {
+            FileInputStream fileIn = new FileInputStream(nombreArchivo);
+            InputStreamReader isIn = new InputStreamReader(fileIn);
+            BufferedReader in = new BufferedReader(isIn);
+	    String linea = in.readLine();
+	    while (linea != null && !linea.trim().equals("")){
+		if(linea.length() == 1){
+		    Vertice v = new Vertice(linea);
+		    vertices.agregaFinal(v);
+		}
+		linea = in.readLine();
+	    }
+            in.close();
+	    return vertices;
+	}catch (IOException ioe) {
+            System.out.printf("No pude cargar del archivo \"%s\".\n",
+                              nombreArchivo);
+            System.exit(1);
+	}
+	return vertices;
+    }
+
+    public static Lista<Aristas> leeDjikstraA(String nombreArchivo){
+	Lista<Aristas> aristas = new Lista<>();
+	try {
+            FileInputStream fileIn = new FileInputStream(nombreArchivo);
+            InputStreamReader isIn = new InputStreamReader(fileIn);
+            BufferedReader in = new BufferedReader(isIn);
+	    String linea = in.readLine();
+	    while (linea != null && !linea.trim().equals("")){
+		if (linea.length() > 1){		   
+		    linea.strip();
+		    String[]aristaYp = linea.split(" ");
+		    Vertice n1 = new Vertice(aristaYp[0]);
+		    Vertice n2 = new Vertice(aristaYp[1]);		   
+		    int peso = Integer.parseInt(aristaYp[2]);
+		    Aristas arista = new Aristas(n1, n2, peso);
+		    aristas.agregaFinal(arista);
+		}
+		linea = in.readLine();
+	    }
+            in.close();
+	    return aristas;
+	}catch (IOException ioe) {
+            System.out.printf("No pude cargar del archivo \"%s\".\n",
+                              nombreArchivo);
+            System.exit(1);
+	}
+	return aristas;
+    }
+
+
+     public static Lista<Vertice> leeBDfsV(String nombreArchivo){
+	Lista<Vertice> vertices = new Lista<>();
+	try {
+            FileInputStream fileIn = new FileInputStream(nombreArchivo);
+            InputStreamReader isIn = new InputStreamReader(fileIn);
+            BufferedReader in = new BufferedReader(isIn);
+	    String linea = in.readLine();
+	    while (linea != null && !linea.trim().equals("")){
+		if(linea.length() == 1){
+		    Vertice v = new Vertice(linea);
+		    vertices.agregaFinal(v);
+		}
+		linea = in.readLine();
+	    }
+            in.close();
+	    return vertices;
+	}catch (IOException ioe) {
+            System.out.printf("No pude cargar del archivo \"%s\".\n",
+                              nombreArchivo);
+            System.exit(1);
+	}
+	return vertices;
+    }
+
+     public static Lista<Aristas> leeBDfsA(String nombreArchivo){
+	Lista<Aristas> aristas = new Lista<>();
+	try {
+            FileInputStream fileIn = new FileInputStream(nombreArchivo);
+            InputStreamReader isIn = new InputStreamReader(fileIn);
+            BufferedReader in = new BufferedReader(isIn);
+	    String linea = in.readLine();
+	    while (linea != null && !linea.trim().equals("")){
+		if (linea.length() != 1){		   
+		    linea.strip();
+		    String[]aristaYp = linea.split(" ");
+		    Vertice nodo1 = new Vertice(aristaYp[0]);
+		    Vertice nodo2 = new Vertice(aristaYp[1]);
+		    Aristas arista = new Aristas(nodo1, nodo2, 0);
+		    aristas.agregaFinal(arista);
+		}
+		linea = in.readLine();
+	    }
+            in.close();
+	    return aristas;
+	}catch (IOException ioe) {
+            System.out.printf("No pude cargar del archivo \"%s\".\n",
+                              nombreArchivo);
+            System.exit(1);
+	}
+	return aristas;
+    }
+	
 }
