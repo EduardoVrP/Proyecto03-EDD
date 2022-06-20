@@ -69,7 +69,7 @@ public class Servidor {
 				    /**** ESCRIBIMOS *****/
 					//Le damos al cliente la lista de vertices 
 					DataOutputStream pdSuma = new DataOutputStream(cn.getOutputStream());
-					pdSuma.writeUTF(resultado.toString());
+					pdSuma.writeUTF("\nResultado: \n" + resultado.toString() + "\n");
 				    
 
 					//VOLVEMOS A CARGAR DATOS
@@ -93,8 +93,17 @@ public class Servidor {
 					solicitaOperacion(operacionDeseadaNS, cn, serv, entrada);				
 				}// termina op==1
 
-				//Es una resta
+				//BFS
 				if(op==2) {			
+					File docBFS = new File("BFS.txt");
+					Bfs recorridoBFS = new Bfs(docBFS);
+
+					Lista<Character> resultadoBFS = recorridoBFS.aplicaBFS();
+
+					/**ESCRIBIMOS */
+					//Mandamos la lista con el recorrido
+					DataOutputStream pdBFS = new DataOutputStream(cn.getOutputStream());
+					pdBFS.writeUTF("\nResultado:\n " + resultadoBFS.toString() + "\n");
 
 					//VOLVEMOS A CARGAR DATOS
 					/***** LEEMOS ***/
@@ -116,13 +125,16 @@ public class Servidor {
 
 					solicitaOperacion(operacionDeseadaNR, cn, serv, entrada);
 				}
-				// es una multiplicaci√≥n
+				// DFS
 				if(op==3) {			
-			
-					/**** ESCRIBIMOS *****/
-					//Le decimos al cliente la respuesta
-					DataOutputStream respuestaMultiplicacion = new DataOutputStream(cn.getOutputStream());
-					respuestaMultiplicacion.writeUTF("Opcion DFS");
+					File docDFS = new File("DFS.txt");
+					Dfs recorridoDFS = new Dfs(docDFS);
+
+					Lista<Character> resultadoDFS = recorridoDFS.aplicaDFS();
+					/**ESCRIBIMOS */
+					//Mandamos la lista con el recorrido
+					DataOutputStream pdDFS = new DataOutputStream(cn.getOutputStream());
+					pdDFS.writeUTF("\nResultado:\n " + resultadoDFS.toString() + "\n");
 
 					//VOLVEMOS A CARGAR DATOS
 					/***** LEEMOS ***/
@@ -206,7 +218,7 @@ public class Servidor {
     }
 
 
-     public static Lista<Vertice> leeBDfsV(String nombreArchivo){
+    public static Lista<Vertice> leeBDfsV(String nombreArchivo){
 	Lista<Vertice> vertices = new Lista<>();
 	try {
             FileInputStream fileIn = new FileInputStream(nombreArchivo);
@@ -230,7 +242,7 @@ public class Servidor {
 	return vertices;
     }
 
-     public static Lista<Aristas> leeBDfsA(String nombreArchivo){
+    public static Lista<Aristas> leeBDfsA(String nombreArchivo){
 	Lista<Aristas> aristas = new Lista<>();
 	try {
             FileInputStream fileIn = new FileInputStream(nombreArchivo);
